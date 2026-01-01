@@ -8,4 +8,7 @@ class SaveUserUseCase:
         self.presenter = presenter
 
     def execute(self, command):
-        self.presenter.present(OutputDTO(success=True))
+        if self.repository.exists(command.first_name, command.last_name):
+            self.presenter.present(OutputDTO(success=False))
+        else:
+            self.presenter.present(OutputDTO(success=True))
