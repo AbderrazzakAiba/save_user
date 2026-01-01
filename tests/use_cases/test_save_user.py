@@ -41,3 +41,22 @@ def test_save_user_when_user_already_exists():
     presenter.present.assert_called_once_with(
         OutputDTO(success=False)
     )
+
+def test_save_user_with_invalid_name_should_fail():
+    presenter = Mock()
+    repository = Mock()
+    repository.exists.return_value = False
+
+    use_case = SaveUserUseCase(repository, presenter)
+
+    command = CreateUserCommand(
+        first_name="Abd3r",
+        last_name="Aiba"
+    )
+
+    use_case.execute(command)
+
+    presenter.present.assert_called_once_with(
+        OutputDTO(success=False)
+    )
+
