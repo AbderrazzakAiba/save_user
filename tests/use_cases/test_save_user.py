@@ -1,17 +1,7 @@
 from unittest.mock import Mock
 
-class SaveUserUseCase:
-    def __init__(self, repository, presenter):
-        self.presenter = presenter
-
-    def execute(self, command):
-        self.presenter.present(None)
-
-
-class CreateUserCommand:
-    def __init__(self, first_name, last_name):
-        self.first_name = first_name
-        self.last_name = last_name
+from src.use_cases.save_user.use_case import SaveUserUseCase
+from src.use_cases.save_user.command import CreateUserCommand
 
 
 def test_save_user_success():
