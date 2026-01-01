@@ -8,19 +8,15 @@ class SaveUserUseCase:
         self.presenter = presenter
 
     def execute(self, command):
-        if self._user_already_exists(command):
-            self._present_user_already_exists()
-        else:
-            self._present_user_created()
+        if not self._is_valid_name(command.first_name) or not self._is_valid_name(command.last_name):
+            self.presenter.present(OutputDTO(success=False))
+            return
 
-    def _user_already_exists(self, command):
-        return self.repository.exists(
-            command.first_name,
-            command.last_name
-        )
+        if self.repository.exists(command.first_name, command.last_name):
+            self.presenter.present(OutputDTO(success=False))
+            return
 
-    def _present_user_already_exists(self):
-        self.presenter.present(OutputDTO(success=False))
-
-    def _present_user_created(self):
         self.presenter.present(OutputDTO(success=True))
+
+    def _is_valid_name(self, name: str) -> bool:
+        return name.isalpha()
