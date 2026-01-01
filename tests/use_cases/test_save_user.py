@@ -39,7 +39,7 @@ def test_save_user_when_user_already_exists():
     use_case.execute(command)
 
     presenter.present.assert_called_once_with(
-        OutputDTO(success=False)
+        OutputDTO(success=False , error="USER_ALREADY_EXISTS")
     )
 
 def test_save_user_with_invalid_name_should_fail():
@@ -57,6 +57,6 @@ def test_save_user_with_invalid_name_should_fail():
     use_case.execute(command)
 
     presenter.present.assert_called_once_with(
-        OutputDTO(success=False)
+        OutputDTO(success=False , error="INVALID_NAME")
     )
 
