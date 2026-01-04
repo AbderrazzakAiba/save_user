@@ -59,4 +59,20 @@ def test_save_user_with_invalid_name_should_fail():
     presenter.present.assert_called_once_with(
         OutputDTO(success=False , error="INVALID_NAME")
     )
+def test_save_user_calls_repository_save_on_success():
+    presenter = Mock()
+    repository = Mock()
+    repository.exists.return_value = False
+
+    use_case = SaveUserUseCase(repository, presenter)
+
+    command = CreateUserCommand(
+        first_name="Abderrazzak",
+        last_name="Aiba"
+    )
+
+    use_case.execute(command)
+
+    repository.save.assert_called_once()
+
 
