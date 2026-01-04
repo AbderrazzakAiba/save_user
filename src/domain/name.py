@@ -7,4 +7,7 @@ class Name:
         if value == "":
             raise InvalidNameError()
 
+        if not value.isalpha():
+            raise InvalidNameError()
+
         self.value = value
